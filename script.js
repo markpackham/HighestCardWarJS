@@ -48,6 +48,7 @@ function startGame() {
   computerDeck = deck.cards.slice(deckMidpoint, deck.numberOfCards);
   // card starts off unflipped
   inRound = false;
+  stop = false;
 
   cleanBeforeRound();
 }
@@ -73,18 +74,26 @@ function flipCards() {
   updateDeckCount();
 
   if (isRoundWinner(playerCard, computerCard)) {
-    text.innerText = "Player Won";
+    text.innerText = "Player Won Round";
     // winner gets to take the loser's card
     playerDeck.push(playerCard);
     playerDeck.push(computerCard);
   } else if (isRoundWinner(computerCard, playerCard)) {
-    text.innerText = "Player Lost";
+    text.innerText = "Player Lost Round";
     computerDeck.push(playerCard);
     computerDeck.push(computerCard);
   } else {
     text.innerText = "Draw";
     playerDeck.push(playerCard);
     computerDeck.push(computerCard);
+  }
+
+  if (isGameOver(playerDeck)) {
+    text.innerText = "Player Lost The Game";
+    stop = true;
+  } else if (isGameOver(computerDeck)) {
+    text.innerText = "Player Won The Game";
+    stop = true;
   }
 }
 
@@ -95,4 +104,8 @@ function updateDeckCount() {
 
 function isRoundWinner(cardOne, cardTwo) {
   return CARD_VALUE_MAP[cardOne.value] > CARD_VALUE_MAP[cardTwo.value];
+}
+
+function isGameOver(deck) {
+  return deck.numberOfCards == 0;
 }
