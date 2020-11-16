@@ -44,8 +44,8 @@ function startGame() {
 
   const deckMidpoint = Math.ceil(deck.numberOfCards / 2);
   // player gets first half, computer the remainder
-  playerDeck = deck.cards.slice(0, deckMidpoint);
-  computerDeck = deck.cards.slice(deckMidpoint, deck.numberOfCards);
+  playerDeck = new Deck(deck.cards.slice(0, deckMidpoint));
+  computerDeck = new Deck(deck.cards.slice(deckMidpoint, deck.numberOfCards));
   // card starts off unflipped
   inRound = false;
   stop = false;
